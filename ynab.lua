@@ -68,8 +68,8 @@ function WriteHeader (account, startDate, endDate, transactionCount)
         <STMTRS>
           <CURDEF>EUR
           <BANKACCTFROM>
-            <BANKID>]].. transaction.bankCode ..[[
-            <ACCTID>]].. transaction.accountNumber ..[[
+            <BANKID>]].. account.bankCode ..[[
+            <ACCTID>]].. account.accountNumber ..[[
             <ACCTTYPE>CHECKING
           </BANKACCTFROM>
           <BANKTRANLIST>
