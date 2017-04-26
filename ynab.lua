@@ -80,19 +80,19 @@ end
 
 function WriteTransactions (account, transactions)
   for _,transaction in ipairs(transactions) do
-
-    trntype = transaction.amount > 0 and "CREDIT" or "DEBIT"
-
-    assert(io.write([[
-      <STMTTRN>
-        <TRNTYPE>]].. trntype ..[[
-        <DTPOSTED>]].. os.date("%Y%m%d", transaction.bookingDate) .. [[
-        <TRNAMT>]] .. transaction.amount .. [[
-        <FITID>]] .. transaction.id .. [[ 
-        <NAME>]] .. transaction.name .. [[
-        <MEMO>]] .. transaction.comment .. [[
-      </STMTTRN>
-    ]]))
+    if transaction.booked then
+      trntype = transaction.amount > 0 and "CREDIT" or "DEBIT"
+      assert(io.write([[
+        <STMTTRN>
+          <TRNTYPE>]].. trntype ..[[
+          <DTPOSTED>]].. os.date("%Y%m%d", transaction.bookingDate) .. [[
+          <TRNAMT>]] .. transaction.amount .. [[
+          <FITID>]] .. transaction.id .. [[ 
+          <NAME>]] .. transaction.name .. [[
+          <MEMO>]] .. transaction.comment .. [[
+        </STMTTRN>
+      ]]))
+    end
   end
 end
 
