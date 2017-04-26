@@ -1,6 +1,6 @@
 # moneymoney2ynab
 
-[MoneyMoney](https://moneymoney-app.com/) Extension to export a OFX file that is optmized to work for [YNAB](https://www.youneedabudget.com/) import.
+[MoneyMoney](https://moneymoney-app.com/) Extension to export a OFX file that is optimized to work for [YNAB](https://www.youneedabudget.com/) import.
 
 Next to MoneyMoneys native OFX-Export this extensions is optimized to work for YNAB. It excludes all planned transactions   
 
