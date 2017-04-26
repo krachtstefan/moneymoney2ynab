@@ -89,7 +89,7 @@ function WriteTransactions (account, transactions)
           <TRNAMT>]] .. transaction.amount .. [[
           <FITID>]] .. transaction.id .. [[ 
           <NAME>]] .. transaction.name .. [[
-          <MEMO>]] .. transaction.comment .. [[
+          <MEMO>]] .. transaction.purpose .. [[
         </STMTTRN>
       ]]))
     end
