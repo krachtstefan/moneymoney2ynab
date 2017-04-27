@@ -36,76 +36,69 @@ Exporter{version          = 1.00,
          description      = MM.localizeText("Export a ofx file to be used for YNAB import")}
 
 function WriteHeader (account, startDate, endDate, transactionCount)
-  assert(io.write([[
-		OFXHEADER:100
-		DATA:OFXSGML
-		VERSION:102
-		SECURITY:NONE
-		ENCODING:USASCII
-		CHARSET:1252
-		COMPRESSION:NONE
-		OLDFILEUID:NONE
-		NEWFILEUID:NONE
-
-    <OFX>
-    <SIGNONMSGSRSV1>
-      <SONRS>
-        <STATUS>
-          <CODE>0
-          <SEVERITY>INFO
-        </STATUS>
-        <DTSERVER>20170426072808
-        <LANGUAGE>ENG
-      </SONRS>
-    </SIGNONMSGSRSV1>
-    <BANKMSGSRSV1>
-      <STMTTRNRS>
-        <TRNUID>1
-        <STATUS>
-          <CODE>0
-          <SEVERITY>INFO
-        </STATUS>
-        <STMTRS>
-          <CURDEF>EUR
-          <BANKACCTFROM>
-            <BANKID>]].. account.bankCode ..[[
-            <ACCTID>]].. account.accountNumber ..[[
-            <ACCTTYPE>CHECKING
-          </BANKACCTFROM>
-          <BANKTRANLIST>
-            <DTSTART>]].. os.date("%Y%m%d", startDate) .. [[
-            <DTEND>]].. os.date("%Y%m%d", endDate) .. [[
-  ]]))
+  assert(io.write("OFXHEADER:100\n"))
+  assert(io.write("DATA:OFXSGML\n"))
+  assert(io.write("VERSION:102\n"))
+  assert(io.write("SECURITY:NONE\n"))
+  assert(io.write("ENCODING:USASCII\n"))
+  assert(io.write("CHARSET:1252\n"))
+  assert(io.write("COMPRESSION:NONE\n"))
+  assert(io.write("OLDFILEUID:NONE\n"))
+  assert(io.write("NEWFILEUID:NONE\n"))
+  assert(io.write("<OFX>\n"))
+  assert(io.write("<SIGNONMSGSRSV1>\n"))
+  assert(io.write("  <SONRS>\n"))
+  assert(io.write("    <STATUS>\n"))
+  assert(io.write("      <CODE>0\n"))
+  assert(io.write("      <SEVERITY>INFO\n"))
+  assert(io.write("    </STATUS>\n"))
+  assert(io.write("    <DTSERVER>20170426072808\n"))
+  assert(io.write("    <LANGUAGE>ENG\n"))
+  assert(io.write("  </SONRS>\n"))
+  assert(io.write("</SIGNONMSGSRSV1>\n"))
+  assert(io.write("<BANKMSGSRSV1>\n"))
+  assert(io.write("  <STMTTRNRS>\n"))
+  assert(io.write("    <TRNUID>1\n"))
+  assert(io.write("    <STATUS>\n"))
+  assert(io.write("      <CODE>0\n"))
+  assert(io.write("      <SEVERITY>INFO\n"))
+  assert(io.write("    </STATUS>\n"))
+  assert(io.write("    <STMTRS>\n"))
+  assert(io.write("      <CURDEF>EUR\n"))
+  assert(io.write("      <BANKACCTFROM>\n"))
+  assert(io.write("        <BANKID>",account.bankCode, "\n"))
+  assert(io.write("        <ACCTID>", account.accountNumber, "\n"))
+  assert(io.write("        <ACCTTYPE>CHECKING\n"))
+  assert(io.write("      </BANKACCTFROM>\n"))
+  assert(io.write("      <BANKTRANLIST>\n"))
+  assert(io.write("        <DTSTART>", os.date("%Y%m%d", startDate), "\n"))
+  assert(io.write("        <DTEND>", os.date("%Y%m%d", endDate), "\n"))
 end
 
 function WriteTransactions (account, transactions)
   for _,transaction in ipairs(transactions) do
     if transaction.booked then
       trntype = transaction.amount > 0 and "CREDIT" or "DEBIT"
-      assert(io.write([[
-        <STMTTRN>
-          <TRNTYPE>]].. trntype ..[[
-          <DTPOSTED>]].. os.date("%Y%m%d", transaction.bookingDate) .. [[
-          <TRNAMT>]] .. transaction.amount .. [[
-          <FITID>]] .. transaction.id .. [[ 
-          <NAME>]] .. transaction.name .. [[
-          <MEMO>]] .. transaction.purpose .. [[
-        </STMTTRN>
-      ]]))
+      assert(io.write("        <STMTTRN>\n"))
+      assert(io.write("          <TRNTYPE>", trntype, "\n"))
+      assert(io.write("          <DTPOSTED>", os.date("%Y%m%d", transaction.bookingDate), "\n"))
+      assert(io.write("          <TRNAMT>", transaction.amount, "\n"))
+      assert(io.write("          <FITID>", transaction.id, "\n"))
+      assert(io.write("          <NAME>", transaction.name, "\n"))
+      assert(io.write("          <MEMO>", transaction.purpose, "\n"))
+      assert(io.write("        </STMTTRN>\n"))
     end
   end
 end
 
 function WriteTail (account)
-  assert(io.write([[
-            </BANKTRANLIST>
-            <LEDGERBAL>
-              <BALAMT>]].. account.balance ..[[
-              <DTASOF>20170327
-            </LEDGERBAL>
-          </STMTRS>
-        </STMTTRNRS>
-      </BANKMSGSRSV1>
-    </OFX>
-  ]]))
+  assert(io.write("        </BANKTRANLIST>\n"))
+  assert(io.write("        <LEDGERBAL>\n"))
+  assert(io.write("          <BALAMT>", account.balance, "\n"))
+  assert(io.write("          <DTASOF>20170327\n"))
+  assert(io.write("        </LEDGERBAL>\n"))
+  assert(io.write("      </STMTRS>\n"))
+  assert(io.write("    </STMTTRNRS>\n"))
+  assert(io.write("  </BANKMSGSRSV1>\n"))
+  assert(io.write("</OFX>"))
 end
