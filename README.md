@@ -6,14 +6,14 @@ Next to MoneyMoneys native OFX-Export this extensions is optimized to work for Y
 
 ## Installation
 
-- Open MoneyMoney `Hilfe` menu and click on `Zeige Datenbank im Finder`
+- Open MoneyMoney `Help` menu and click on `Show Database in Finder`
 - Put the `ynab.lua` file in the `Extensions` folder
 - no app restart required
 
 ## Export usage
 - Open MoneyMoney and select the account you want to export
 - optionally adjust date range, category, etc.
-- select `Konto` -> `Umsätze exportieren` in the menu
+- select `Account` -> `Export Transactions...` in the menu
 - pick a filename and select the type `OFX-Datei for YNAB (.ofx)`
 
 ## Import usage
