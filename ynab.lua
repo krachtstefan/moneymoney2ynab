@@ -29,19 +29,19 @@
 -- Export a ofx file to be used for YNAB import (skippes all planned transactions)
 --
 
-Exporter{version          = 1.00,
-         format           = MM.localizeText("OFX-Datei for YNAB"),
+Exporter{version          = 1.10,
+         format           = MM.localizeText("OFX File for YNAB"),
          fileExtension    = "ofx",
          reverseOrder     = false,
-         description      = MM.localizeText("Export a ofx file to be used for YNAB import")}
+         description      = MM.localizeText("Export an OFX file to be used for YNAB import")}
 
 function WriteHeader (account, startDate, endDate, transactionCount)
   assert(io.write("OFXHEADER:100\n"))
   assert(io.write("DATA:OFXSGML\n"))
-  assert(io.write("VERSION:102\n"))
+  assert(io.write("VERSION:160\n"))
   assert(io.write("SECURITY:NONE\n"))
-  assert(io.write("ENCODING:USASCII\n"))
-  assert(io.write("CHARSET:1252\n"))
+  assert(io.write("ENCODING:UTF-8\n"))
+  assert(io.write("CHARSET:NONE\n"))
   assert(io.write("COMPRESSION:NONE\n"))
   assert(io.write("OLDFILEUID:NONE\n"))
   assert(io.write("NEWFILEUID:NONE\n"))
